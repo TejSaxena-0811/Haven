@@ -1,4 +1,4 @@
-# Haven - RAG AI Agent
+# Haven: RAG AI Agent
 
 Haven is a local and offline RAG-based document assistant that allows users to ask questions about their own documents without sending their data to a cloud-based AI service. It uses locally running AI models to retrieve relevant information and generate answers while keeping the documents on the user's own machine.
 
