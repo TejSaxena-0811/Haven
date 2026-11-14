@@ -4,7 +4,7 @@ Haven is a local and offline RAG-based document assistant that allows users to a
 
 
 # A chart explaining the complete flow:
-<img width="421" height="1040" alt="image" src="https://github.com/user-attachments/assets/f4b4e66b-652e-4a5e-b42d-8e1a536ab0f7" />
+
 
 ---
 
