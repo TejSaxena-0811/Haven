@@ -7,9 +7,6 @@ import pandas as pd
 import os
 
 
-# -----------------------------
-# Load CSV for data analysis
-# -----------------------------
 
 DATA_FOLDER = "./data"
 
@@ -32,18 +29,14 @@ def load_csv():
 df = load_csv()
 
 
-# -----------------------------
-# LLM
-# -----------------------------
 
 model = OllamaLLM(
     model="llama3.2"
 )
 
 
-# -----------------------------
-# RAG prompt
-# -----------------------------
+
+# RAG prompt:
 
 template = """
 You are an AI assistant that answers questions using the provided document information.
@@ -67,9 +60,8 @@ prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
 
-# -----------------------------
-# Detect data-analysis questions
-# -----------------------------
+
+# detecting data analysis question:
 
 def is_data_analysis_question(question):
 
@@ -98,9 +90,7 @@ def is_data_analysis_question(question):
     return any(keyword in question for keyword in keywords)
 
 
-# -----------------------------
-# Handle CSV analysis
-# -----------------------------
+
 
 def analyze_csv(question):
 
@@ -109,10 +99,7 @@ def analyze_csv(question):
 
     question = question.lower()
 
-    # --------------------------------
-    # Positive reviews
-    # --------------------------------
-
+    # positive reviews
     if "positive" in question:
 
         positive_reviews = df[df["Rating"] >= 4]
@@ -129,10 +116,7 @@ def analyze_csv(question):
         )
 
 
-    # --------------------------------
-    # Negative reviews
-    # --------------------------------
-
+    # negative reviews
     if "negative" in question:
 
         negative_reviews = df[df["Rating"] <= 2]
@@ -149,9 +133,7 @@ def analyze_csv(question):
         )
 
 
-    # --------------------------------
-    # Average rating
-    # --------------------------------
+    
 
     if "average rating" in question or "mean rating" in question:
 
@@ -162,10 +144,7 @@ def analyze_csv(question):
         )
 
 
-    # --------------------------------
-    # Total number of reviews
-    # --------------------------------
-
+    # total number of reviews
     if (
         "how many reviews" in question
         or "number of reviews" in question
@@ -178,10 +157,7 @@ def analyze_csv(question):
         )
 
 
-    # --------------------------------
-    # 5-star reviews
-    # --------------------------------
-
+    # 5 starr reviews
     if "5 star" in question or "5-star" in question:
 
         five_star_reviews = df[df["Rating"] == 5]
@@ -197,10 +173,7 @@ def analyze_csv(question):
         )
 
 
-    # --------------------------------
     # 1-star reviews
-    # --------------------------------
-
     if "1 star" in question or "1-star" in question:
 
         one_star_reviews = df[df["Rating"] == 1]
@@ -219,9 +192,6 @@ def analyze_csv(question):
     return None
 
 
-# -----------------------------
-# Main loop
-# -----------------------------
 
 while True:
 
@@ -237,9 +207,7 @@ while True:
         break
 
 
-    # --------------------------------
-    # First try data analysis
-    # --------------------------------
+    # 1st try data analysis:
 
     if is_data_analysis_question(question):
 
@@ -250,9 +218,7 @@ while True:
             continue
 
 
-    # --------------------------------
-    # Otherwise use RAG
-    # --------------------------------
+    # else use RAG:
 
     reviews = retriever.invoke(question)
 
